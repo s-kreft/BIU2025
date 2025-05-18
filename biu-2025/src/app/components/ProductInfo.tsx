@@ -17,7 +17,7 @@ const ProductInfo: React.FC<ShoppingItem> = ({ product }) => {
   const discountPrice = productPrice * ((100 - product.discount) / 100);
 
   const buyButton = () => {
-    return alert(`Kupiono ${product.name} za ${discountPrice.toFixed} PLN`);
+    return alert(`Kupiono ${product.name} za ${discountPrice} PLN`);
   };
 
   return (
