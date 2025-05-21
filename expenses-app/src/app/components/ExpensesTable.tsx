@@ -3,13 +3,18 @@
 import { useEffect, useState } from "react";
 import ExpenseItem from "./ExpenseItem";
 import { Item } from "./ExpenseItem";
+import data from "./data.json";
 
-type ItemsTable = {
-  expenses: Item[];
-};
+const ExpensesTable = () => {
+  const [items, setItems] = useState<Item[]>([]);
 
-const ExpensesTable: React.FC<ItemsTable> = ({ expenses }) => {
-  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  useEffect(() => {
+    setItems(data.Items.map((i) => i as Item));
+  }, []);
+
+  const handleClickDelete = (id: Number) => {
+    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
 
   return (
     <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -25,8 +30,12 @@ const ExpensesTable: React.FC<ItemsTable> = ({ expenses }) => {
         </thead>
         <tbody>
           {/* row 1 */}
-          {expenses.map((item, index) => (
-            <ExpenseItem key={index} item={item}></ExpenseItem>
+          {items.map((item, index) => (
+            <ExpenseItem
+              key={index}
+              item={item}
+              handleClickDelete={handleClickDelete}
+            ></ExpenseItem>
           ))}
         </tbody>
       </table>
