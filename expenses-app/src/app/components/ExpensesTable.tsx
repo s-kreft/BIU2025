@@ -4,16 +4,29 @@ import { useEffect, useState } from "react";
 import ExpenseItem from "./ExpenseItem";
 import { Item } from "./ExpenseItem";
 import data from "./data.json";
+import ExpenseDetailModal from "./ExpenseDetailsModal";
 
 const ExpensesTable = () => {
   const [items, setItems] = useState<Item[]>([]);
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setItems(data.Items.map((i) => i as Item));
   }, []);
 
-  const handleClickDelete = (id: Number) => {
+  const handleClickDelete = (id: number) => {
     setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
+
+  const handleRowClick = (item: Item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedItem(null);
   };
 
   return (
@@ -35,10 +48,16 @@ const ExpensesTable = () => {
               key={index}
               item={item}
               handleClickDelete={handleClickDelete}
+              onRowClick={() => handleRowClick(item)}
             ></ExpenseItem>
           ))}
         </tbody>
       </table>
+      <ExpenseDetailModal
+        item={selectedItem}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </div>
   );
 };

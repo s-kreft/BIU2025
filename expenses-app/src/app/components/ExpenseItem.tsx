@@ -1,22 +1,27 @@
 import React from "react";
 
 export type Item = {
-  id: Number;
-  title: String;
-  amount: Number;
-  category: String;
-  date: String;
-  description: String;
+  id: number;
+  title: string;
+  amount: number;
+  category: string;
+  date: string;
+  description: string;
 };
 
 type ExpensesItem = {
   item: Item;
-  handleClickDelete: (id: Number) => void;
+  handleClickDelete: (id: number) => void;
+  onRowClick: () => void;
 };
 
-const ExpenseItem: React.FC<ExpensesItem> = ({ item, handleClickDelete }) => {
+const ExpenseItem: React.FC<ExpensesItem> = ({
+  item,
+  handleClickDelete,
+  onRowClick,
+}) => {
   return (
-    <tr>
+    <tr onClick={onRowClick} className="cursor-pointer hover:bg-base-200">
       <th>{item.title}</th>
       <td>{item.amount.toFixed()}</td>
       <td>{item.category}</td>
@@ -24,7 +29,10 @@ const ExpenseItem: React.FC<ExpensesItem> = ({ item, handleClickDelete }) => {
       <td>
         <button
           className="btn btn-outline btn-error"
-          onClick={() => handleClickDelete(item.id)}
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent row click from firing
+            handleClickDelete(item.id);
+          }}
         >
           Usuń
         </button>
