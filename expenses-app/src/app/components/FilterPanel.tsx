@@ -20,7 +20,7 @@ const FilterPanel: React.FC<FilterData> = ({
         onChange={(e) => setDateFilter(e.target.value)}
       />
       <details className="dropdown">
-        <summary className="btn m-1">open or close</summary>
+        <summary className="btn m-1">Kategoria</summary>
         <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
           <li>
             <a onClick={() => setCategoryFilter("Jedzenie")}>Jedzenie</a>
@@ -36,6 +36,15 @@ const FilterPanel: React.FC<FilterData> = ({
           </li>
         </ul>
       </details>
+      <button
+        className="btn btn-outline btn-info"
+        onClick={() => {
+          setCategoryFilter("");
+          setDateFilter("");
+        }}
+      >
+        Reset Filtra
+      </button>
     </div>
   );
 };

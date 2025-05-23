@@ -23,6 +23,62 @@
       "category": "Rozrywka",
       "date": "2024-03-25",
       "description": "Bilet na koncert ulubionego zespołu."
+    },
+    {
+      "id": 4,
+      "title": "Bilet autobusowy",
+      "amount": 12,
+      "category": "Transport",
+      "date": "2024-04-12",
+      "description": "Bilet jednorazowy na autobus miejski."
+    },
+    {
+      "id": 5,
+      "title": "Pizza z przyjaciółmi",
+      "amount": 90,
+      "category": "Jedzenie",
+      "date": "2024-04-15",
+      "description": "Kolacja w pizzerii z przyjaciółmi."
+    },
+    {
+      "id": 6,
+      "title": "Opłata za prąd",
+      "amount": 130,
+      "category": "Rachunki",
+      "date": "2024-04-07",
+      "description": "Miesięczna opłata za energię elektryczną."
+    },
+    {
+      "id": 7,
+      "title": "Netflix",
+      "amount": 55,
+      "category": "Rozrywka",
+      "date": "2024-04-01",
+      "description": "Abonament miesięczny na Netflix."
+    },
+    {
+      "id": 8,
+      "title": "Tankowanie auta",
+      "amount": 240,
+      "category": "Transport",
+      "date": "2024-03-25",
+      "description": "Tankowanie paliwa na stacji Orlen."
+    },
+    {
+      "id": 9,
+      "title": "Zakupy w Biedronce",
+      "amount": 180,
+      "category": "Jedzenie",
+      "date": "2024-04-11",
+      "description": "Tygodniowe zakupy spożywcze."
+    },
+    {
+      "id": 10,
+      "title": "Rachunek za wodę",
+      "amount": 60,
+      "category": "Rachunki",
+      "date": "2024-04-03",
+      "description": "Miesięczna opłata za wodę."
     }
   ]
 }
