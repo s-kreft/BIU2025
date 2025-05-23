@@ -41,7 +41,11 @@ const ExpenseDetailModal = ({
         onClose={onClose}
       >
         <div className="modal-box">
+          <div className="badge badge-outline badge-primary">
+            {item.category}
+          </div>
           <h3 className="font-bold text-lg">{item.title}</h3>
+          <h2>{item.date}</h2>
           <p className="py-4">{item.description}</p>
           <div className="modal-action">
             <form method="dialog">
