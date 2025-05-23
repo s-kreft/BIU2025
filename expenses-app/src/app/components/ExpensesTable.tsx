@@ -52,6 +52,8 @@ const ExpensesTable = () => {
         <FilterPanel
           categoryFilter={categoryFilter}
           setCategoryFilter={setCategoryFilter}
+          dateFilter={dateFilter}
+          setDateFilter={setDateFilter}
         ></FilterPanel>
       </div>
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
