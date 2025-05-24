@@ -61,6 +61,7 @@ const ExpensesTable = () => {
           {/* head */}
           <thead>
             <tr>
+              <th>Id</th>
               <th>Tytuł</th>
               <th>Kwota</th>
               <th>Kategoria</th>

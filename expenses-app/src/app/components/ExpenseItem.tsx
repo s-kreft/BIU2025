@@ -22,6 +22,7 @@ const ExpenseItem: React.FC<ExpensesItem> = ({
 }) => {
   return (
     <tr onClick={onRowClick} className="cursor-pointer hover:bg-base-200">
+      <th>{item.id}</th>
       <th>{item.title}</th>
       <td>{item.amount.toFixed()}</td>
       <td>{item.category}</td>
