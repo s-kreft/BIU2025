@@ -7,6 +7,7 @@ import { FilterData } from "./FilterPanel";
 import data from "./data.json";
 import ExpenseDetailModal from "./ExpenseDetailsModal";
 import FilterPanel from "./FilterPanel";
+import { AddExpenseFormModal } from "./AddExpenseFormModal";
 
 const ExpensesTable = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -15,6 +16,7 @@ const ExpensesTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string>("");
   const [dateFilter, setDateFilter] = useState<string>("");
+  const [isFormikModalOpen, setIsFormikModalOpen] = useState(false);
 
   useEffect(() => {
     const loadedItems = data.Items.map((i) => i as Item);
@@ -55,6 +57,26 @@ const ExpensesTable = () => {
           dateFilter={dateFilter}
           setDateFilter={setDateFilter}
         ></FilterPanel>
+      </div>
+      <div>
+        <button
+          className="btn btn-outline btn-info"
+          onClick={(e) => {
+            setIsFormikModalOpen(true);
+            const m = document.getElementById(
+              "my_modal_1"
+            ) as HTMLDialogElement;
+            m.showModal();
+          }}
+        >
+          Formik Modal
+        </button>
+        {isFormikModalOpen && (
+          <AddExpenseFormModal
+            isOpen={isFormikModalOpen}
+            onClose={() => setIsFormikModalOpen(false)}
+          ></AddExpenseFormModal>
+        )}
       </div>
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
         <table className="table">
