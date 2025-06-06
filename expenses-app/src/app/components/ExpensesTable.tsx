@@ -8,6 +8,7 @@ import data from "./data.json";
 import ExpenseDetailModal from "./ExpenseDetailsModal";
 import FilterPanel from "./FilterPanel";
 import { AddExpenseFormModal } from "./AddExpenseFormModal";
+import { AddExpenseForm } from "./AddExpenseForm";
 
 const ExpensesTable = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -34,8 +35,11 @@ const ExpensesTable = () => {
     setFilteredItems(filtered);
   }, [categoryFilter, dateFilter, items]);
 
-  const handleClickDelete = (id: number) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  // const handleClickDelete = (id: number) => {
+  //   setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  // };
+  const handleClickDelete = (id: Item) => {
+    setItems((prevItems) => prevItems.filter((item) => item !== id));
   };
 
   const handleRowClick = (item: Item) => {
@@ -46,6 +50,10 @@ const ExpensesTable = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedItem(null);
+  };
+
+  const onSubmitNewExpense = (item: Item) => {
+    setItems([...items, item]);
   };
 
   return (
@@ -66,7 +74,7 @@ const ExpensesTable = () => {
             const m = document.getElementById(
               "my_modal_1"
             ) as HTMLDialogElement;
-            m.showModal();
+            m?.showModal();
           }}
         >
           Formik Modal
@@ -75,7 +83,11 @@ const ExpensesTable = () => {
           <AddExpenseFormModal
             isOpen={isFormikModalOpen}
             onClose={() => setIsFormikModalOpen(false)}
-          ></AddExpenseFormModal>
+          >
+            <AddExpenseForm
+              onSubmitNewExpense={(item) => onSubmitNewExpense(item)}
+            ></AddExpenseForm>
+          </AddExpenseFormModal>
         )}
       </div>
       <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">

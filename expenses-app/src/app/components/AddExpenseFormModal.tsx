@@ -9,11 +9,13 @@ import { AddExpenseForm } from "./AddExpenseForm";
 export type AddExpenseFormModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  children: React.ReactNode;
 };
 
 export const AddExpenseFormModal: React.FC<AddExpenseFormModalProps> = ({
   isOpen,
   onClose,
+  children,
 }) => {
   const modal = useRef<HTMLDialogElement>(null);
   useEffect(() => {
@@ -29,7 +31,7 @@ export const AddExpenseFormModal: React.FC<AddExpenseFormModalProps> = ({
 
       <dialog ref={modal} id="my_modal_1" className="modal">
         <div className="modal-box">
-          <AddExpenseForm></AddExpenseForm>
+          {children}
           <div className="modal-action">
             <form method="dialog">
               {/* If there is a button in form, it will close the modal */}

@@ -1,7 +1,7 @@
 import React from "react";
 
 export type Item = {
-  id: number;
+  // id: number;
   title: string;
   amount: number;
   category: string;
@@ -11,7 +11,8 @@ export type Item = {
 
 type ExpensesItem = {
   item: Item;
-  handleClickDelete: (id: number) => void;
+  // handleClickDelete: (id: number) => void;
+  handleClickDelete: (id: Item) => void;
   onRowClick: () => void;
 };
 
@@ -22,7 +23,7 @@ const ExpenseItem: React.FC<ExpensesItem> = ({
 }) => {
   return (
     <tr onClick={onRowClick} className="cursor-pointer hover:bg-base-200">
-      <th>{item.id}</th>
+      {/* <th>{item.id}</th> */}
       <th>{item.title}</th>
       <td>{item.amount.toFixed()}</td>
       <td>{item.category}</td>
@@ -32,7 +33,7 @@ const ExpenseItem: React.FC<ExpensesItem> = ({
           className="btn btn-outline btn-error"
           onClick={(e) => {
             e.stopPropagation(); // Prevent row click from firing
-            handleClickDelete(item.id);
+            handleClickDelete(item);
           }}
         >
           Usuń
