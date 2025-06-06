@@ -9,6 +9,8 @@ import ExpenseDetailModal from "./ExpenseDetailsModal";
 import FilterPanel from "./FilterPanel";
 import { AddExpenseFormModal } from "./AddExpenseFormModal";
 import { AddExpenseForm } from "./AddExpenseForm";
+import { EditExpenseForm } from "./EditExpenseForm";
+import { v4 } from "uuid";
 
 const ExpensesTable = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -18,9 +20,12 @@ const ExpensesTable = () => {
   const [categoryFilter, setCategoryFilter] = useState<string>("");
   const [dateFilter, setDateFilter] = useState<string>("");
   const [isFormikModalOpen, setIsFormikModalOpen] = useState(false);
+  const [isEditExpenseFormClicked, setIsEditExpenseFormClicked] =
+    useState(false);
 
   useEffect(() => {
     const loadedItems = data.Items.map((i) => i as Item);
+
     setItems(loadedItems);
     setFilteredItems(loadedItems);
   }, []);
@@ -42,6 +47,14 @@ const ExpensesTable = () => {
     setItems((prevItems) => prevItems.filter((item) => item !== id));
   };
 
+  const handleClickEdit = (item: Item) => {
+    const newItems = items.map((i) =>
+      item.id === i.id ? { ...i, ...item } : i
+    );
+    setItems(newItems);
+    closeModal();
+  };
+
   const handleRowClick = (item: Item) => {
     setSelectedItem(item);
     setIsModalOpen(true);
@@ -50,10 +63,16 @@ const ExpensesTable = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedItem(null);
+    setIsEditExpenseFormClicked(false);
+    setIsFormikModalOpen(false);
   };
 
   const onSubmitNewExpense = (item: Item) => {
     setItems([...items, item]);
+  };
+
+  const onEditExpenseClicked = () => {
+    setIsEditExpenseFormClicked(true);
   };
 
   return (
@@ -82,7 +101,7 @@ const ExpensesTable = () => {
         {isFormikModalOpen && (
           <AddExpenseFormModal
             isOpen={isFormikModalOpen}
-            onClose={() => setIsFormikModalOpen(false)}
+            onClose={() => closeModal()}
           >
             <AddExpenseForm
               onSubmitNewExpense={(item) => onSubmitNewExpense(item)}
@@ -95,7 +114,6 @@ const ExpensesTable = () => {
           {/* head */}
           <thead>
             <tr>
-              <th>Id</th>
               <th>Tytuł</th>
               <th>Kwota</th>
               <th>Kategoria</th>
@@ -110,10 +128,27 @@ const ExpensesTable = () => {
                 item={item}
                 handleClickDelete={handleClickDelete}
                 onRowClick={() => handleRowClick(item)}
+                handleClickEdit={() => {
+                  setSelectedItem(item);
+                  setIsEditExpenseFormClicked(true);
+                }}
               ></ExpenseItem>
             ))}
           </tbody>
         </table>
+        {isEditExpenseFormClicked && (
+          <AddExpenseFormModal
+            isOpen={isEditExpenseFormClicked}
+            onClose={() => {
+              closeModal();
+            }}
+          >
+            <EditExpenseForm
+              onEditedExpense={(item) => handleClickEdit(item)}
+              editedItem={selectedItem!}
+            ></EditExpenseForm>
+          </AddExpenseFormModal>
+        )}
         <ExpenseDetailModal
           item={selectedItem}
           isOpen={isModalOpen}

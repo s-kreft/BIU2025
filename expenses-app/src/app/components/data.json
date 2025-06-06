@@ -1,7 +1,7 @@
 {
   "Items": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Zakup spożywczy",
       "amount": 150,
       "category": "Jedzenie",
@@ -9,7 +9,7 @@
       "description": "Zakup produktów spożywczych w sklepie Lidl."
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Opłata za internet",
       "amount": 80,
       "category": "Rachunki",
@@ -17,7 +17,7 @@
       "description": "Miesięczna opłata za internet."
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Bilet na koncert",
       "amount": 200,
       "category": "Rozrywka",
@@ -25,7 +25,7 @@
       "description": "Bilet na koncert ulubionego zespołu."
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "Bilet autobusowy",
       "amount": 12,
       "category": "Transport",
@@ -33,7 +33,7 @@
       "description": "Bilet jednorazowy na autobus miejski."
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "Pizza z przyjaciółmi",
       "amount": 90,
       "category": "Jedzenie",
@@ -41,7 +41,7 @@
       "description": "Kolacja w pizzerii z przyjaciółmi."
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "Opłata za prąd",
       "amount": 130,
       "category": "Rachunki",
@@ -49,7 +49,7 @@
       "description": "Miesięczna opłata za energię elektryczną."
     },
     {
-      "id": 7,
+      "id": "7",
       "title": "Netflix",
       "amount": 55,
       "category": "Rozrywka",
@@ -57,7 +57,7 @@
       "description": "Abonament miesięczny na Netflix."
     },
     {
-      "id": 8,
+      "id": "8",
       "title": "Tankowanie auta",
       "amount": 240,
       "category": "Transport",
@@ -65,7 +65,7 @@
       "description": "Tankowanie paliwa na stacji Orlen."
     },
     {
-      "id": 9,
+      "id": "9",
       "title": "Zakupy w Biedronce",
       "amount": 180,
       "category": "Jedzenie",
@@ -73,7 +73,7 @@
       "description": "Tygodniowe zakupy spożywcze."
     },
     {
-      "id": 10,
+      "id": "10",
       "title": "Rachunek za wodę",
       "amount": 60,
       "category": "Rachunki",
