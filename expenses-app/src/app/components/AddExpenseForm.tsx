@@ -1,14 +1,9 @@
 import React from "react";
 import { useFormik } from "formik";
-import { Item } from "./ExpenseItem";
+import { Item, categories } from "./ExpenseItem";
 import { title } from "process";
+import { Field } from "formik";
 import * as Yup from "yup";
-import { ErrorMessage } from "formik";
-import { Formik } from "formik";
-
-// const validationSchema = Yup.object({
-//   title: Yup.string().required("Tytuł jest wymagany"),
-// });
 
 export function AddExpenseForm({
   onSubmitNewExpense,
@@ -30,7 +25,9 @@ export function AddExpenseForm({
       price: Yup.number()
         .positive("Kwota musi być dodatnia")
         .required("Kwota jest wymagana"),
-      category: Yup.string().required("Kategoria jest wymagana"),
+      category: Yup.string()
+        .oneOf(categories)
+        .required("Kategoria jest wymagana"),
       date: Yup.date().required("Data jest wymagana"),
       description: Yup.string().required("Opis jest wymagany"),
     }),
@@ -45,6 +42,7 @@ export function AddExpenseForm({
 
       onSubmitNewExpense(item);
       formik.resetForm();
+      // formik.setFieldValue("category", "");
     },
   });
   return (
@@ -77,13 +75,20 @@ export function AddExpenseForm({
 
         <div>
           <label htmlFor="category">Kategoria</label>
-          <input
+          <select
             id="category"
-            className="input"
-            type="text"
-            onChange={formik.handleChange}
+            name="category"
             value={formik.values.category}
-          />
+            onChange={formik.handleChange}
+            className="select select-bordered w-full"
+          >
+            <option value="">Kategoria</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
           <div>{formik.errors.category}</div>
         </div>
 

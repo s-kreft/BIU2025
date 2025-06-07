@@ -1,5 +1,7 @@
 import React from "react";
 
+export const categories = ["Jedzenie", "Rachunki", "Rozrywka", "Transport"];
+
 export type Item = {
   id: string;
   title: string;

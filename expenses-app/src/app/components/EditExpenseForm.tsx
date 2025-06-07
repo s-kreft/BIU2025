@@ -1,7 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import { Item } from "./ExpenseItem";
-import { title } from "process";
+import { Item, categories } from "./ExpenseItem";
 import * as Yup from "yup";
 
 export function EditExpenseForm({
@@ -24,7 +23,9 @@ export function EditExpenseForm({
       price: Yup.number()
         .positive("Kwota musi być dodatnia")
         .required("Kwota jest wymagana"),
-      category: Yup.string().required("Kategoria jest wymagana"),
+      category: Yup.string()
+        .oneOf(categories)
+        .required("Kategoria jest wymagana"),
       date: Yup.date().required("Data jest wymagana"),
       description: Yup.string().required("Opis jest wymagany"),
     }),
@@ -71,13 +72,20 @@ export function EditExpenseForm({
 
         <div>
           <label htmlFor="category">Kategoria</label>
-          <input
+          <select
             id="category"
-            className="input"
-            type="text"
+            name="category"
             onChange={formik.handleChange}
             value={formik.values.category}
-          />
+            className="select select-bordered w-full"
+          >
+            {/* <option value="">Kategoria</option> */}
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
           <div>{formik.errors.category}</div>
         </div>
 
