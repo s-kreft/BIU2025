@@ -66,7 +66,7 @@ export function AddExpenseForm({
           <input
             id="price"
             className="input"
-            type="text"
+            type="number"
             onChange={formik.handleChange}
             value={formik.values.price}
           />

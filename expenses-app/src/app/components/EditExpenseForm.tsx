@@ -1,7 +1,5 @@
-import React from "react";
-import { useFormik } from "formik";
+import React, { useState } from "react";
 import { Item, categories } from "./ExpenseItem";
-import * as Yup from "yup";
 
 export function EditExpenseForm({
   onEditedExpense,
@@ -10,52 +8,86 @@ export function EditExpenseForm({
   onEditedExpense: (item: Item) => void;
   editedItem: Item;
 }) {
-  const formik = useFormik({
-    initialValues: {
-      title: editedItem.title,
-      price: editedItem.amount,
-      category: editedItem.category,
-      date: editedItem.date,
-      description: editedItem.description,
-    },
-    validationSchema: Yup.object({
-      title: Yup.string().min(3).required("Tytył jest wymagany"),
-      price: Yup.number()
-        .positive("Kwota musi być dodatnia")
-        .required("Kwota jest wymagana"),
-      category: Yup.string()
-        .oneOf(categories)
-        .required("Kategoria jest wymagana"),
-      date: Yup.date().required("Data jest wymagana"),
-      description: Yup.string().required("Opis jest wymagany"),
-    }),
-    onSubmit: (values) => {
-      let item = {
-        id: editedItem.id,
-        title: values.title,
-        amount: Number(values.price),
-        category: values.category,
-        date: values.date,
-        description: values.description,
-      } as Item;
-      onEditedExpense(item);
-      formik.resetForm();
-    },
+  const [title, setTitle] = useState(editedItem.title);
+  const [price, setPrice] = useState(editedItem.amount);
+  const [category, setCategory] = useState(editedItem.category);
+  const [date, setDate] = useState(editedItem.date);
+  const [description, setDescription] = useState(editedItem.description);
+
+  const [errors, setErrors] = useState({
+    title: "",
+    price: "",
+    category: "",
+    date: "",
+    description: "",
   });
+
+  const validate = () => {
+    let valid = true;
+    let newErrors = {
+      title: "",
+      price: "",
+      category: "",
+      date: "",
+      description: "",
+    };
+
+    if (!title || title.length < 3) {
+      newErrors.title = "Tytuł jest wymagany i musi mieć co najmniej 3 znaki";
+      valid = false;
+    }
+    if (!price || isNaN(Number(price)) || Number(price) <= 0) {
+      newErrors.price = "Kwota musi być dodatnia";
+      valid = false;
+    }
+    if (!category || !categories.includes(category)) {
+      newErrors.category = "Kategoria jest wymagana";
+      valid = false;
+    }
+    if (!date) {
+      newErrors.date = "Data jest wymagana";
+      valid = false;
+    }
+    if (!description) {
+      newErrors.description = "Opis jest wymagany";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+    const item: Item = {
+      id: editedItem.id,
+      title,
+      amount: Number(price),
+      category,
+      date,
+      description,
+    };
+    onEditedExpense(item);
+    // Optionally reset fields here
+  };
+
   return (
     <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-      <form onSubmit={formik.handleSubmit}>
-        {/* <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"> */}
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="title">Tytuł</label>
           <input
             id="title"
             className="input"
             type="text"
-            onChange={formik.handleChange}
-            value={formik.values.title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              validate();
+            }}
+            value={title}
           />
-          <div>{formik.errors.title}</div>
+          <div>{errors.title}</div>
         </div>
 
         <div>
@@ -63,11 +95,14 @@ export function EditExpenseForm({
           <input
             id="price"
             className="input"
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.price}
+            type="number"
+            onChange={(e) => {
+              setPrice(Number(e.target.value));
+              validate();
+            }}
+            value={price}
           />
-          <div>{formik.errors.price}</div>
+          <div>{errors.price}</div>
         </div>
 
         <div>
@@ -75,18 +110,20 @@ export function EditExpenseForm({
           <select
             id="category"
             name="category"
-            onChange={formik.handleChange}
-            value={formik.values.category}
+            onChange={(e) => {
+              setCategory(e.target.value);
+              validate();
+            }}
+            value={category}
             className="select select-bordered w-full"
           >
-            {/* <option value="">Kategoria</option> */}
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
               </option>
             ))}
           </select>
-          <div>{formik.errors.category}</div>
+          <div>{errors.category}</div>
         </div>
 
         <div>
@@ -95,10 +132,13 @@ export function EditExpenseForm({
             id="date"
             className="input"
             type="date"
-            onChange={formik.handleChange}
-            value={formik.values.date}
+            onChange={(e) => {
+              setDate(e.target.value);
+              validate();
+            }}
+            value={date}
           />
-          <div>{formik.errors.date}</div>
+          <div>{errors.date}</div>
         </div>
 
         <div>
@@ -107,13 +147,16 @@ export function EditExpenseForm({
             id="description"
             className="textarea"
             type="text"
-            onChange={formik.handleChange}
-            value={formik.values.description}
+            onChange={(e) => {
+              setDescription(e.target.value);
+              validate();
+            }}
+            value={description}
           />
-          <div>{formik.errors.description}</div>
+          <div>{errors.description}</div>
         </div>
         <button type="submit" className="btn btn-success">
-          Dodaj
+          Zapisz
         </button>
       </form>
     </fieldset>
