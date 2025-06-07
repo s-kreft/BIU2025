@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import { Item } from "./ExpenseItem";
 import { title } from "process";
 import * as Yup from "yup";
+import { ErrorMessage } from "formik";
+import { Formik } from "formik";
 
 // const validationSchema = Yup.object({
 //   title: Yup.string().required("Tytuł jest wymagany"),
@@ -14,6 +16,8 @@ export function AddExpenseForm({
   onSubmitNewExpense: (item: Item) => void;
 }) {
   const formik = useFormik({
+    validateOnChange: true,
+    validateOnBlur: true,
     initialValues: {
       title: "",
       price: "",
@@ -56,9 +60,7 @@ export function AddExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.title}
           />
-          {formik.touched.title && formik.errors.title ? (
-            <div>{formik.errors.title}</div>
-          ) : null}
+          <div>{formik.errors.title}</div>
         </div>
 
         <div>
@@ -70,9 +72,7 @@ export function AddExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.price}
           />
-          {formik.touched.price && formik.errors.price ? (
-            <div>{formik.errors.price}</div>
-          ) : null}
+          <div>{formik.errors.price}</div>
         </div>
 
         <div>
@@ -84,9 +84,7 @@ export function AddExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.category}
           />
-          {formik.touched.category && formik.errors.category ? (
-            <div>{formik.errors.category}</div>
-          ) : null}
+          <div>{formik.errors.category}</div>
         </div>
 
         <div>
@@ -98,9 +96,7 @@ export function AddExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.date}
           />
-          {formik.touched.date && formik.errors.date ? (
-            <div>{formik.errors.date}</div>
-          ) : null}
+          <div>{formik.errors.date}</div>
         </div>
 
         <div>
@@ -112,9 +108,7 @@ export function AddExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.description}
           />
-          {formik.touched.description && formik.errors.description ? (
-            <div>{formik.errors.description}</div>
-          ) : null}
+          <div>{formik.errors.description}</div>
         </div>
         <button type="submit" className="btn btn-success">
           Dodaj

@@ -2,6 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import { Item } from "./ExpenseItem";
 import { title } from "process";
+import * as Yup from "yup";
 
 export function EditExpenseForm({
   onEditedExpense,
@@ -18,6 +19,15 @@ export function EditExpenseForm({
       date: editedItem.date,
       description: editedItem.description,
     },
+    validationSchema: Yup.object({
+      title: Yup.string().min(3).required("Tytył jest wymagany"),
+      price: Yup.number()
+        .positive("Kwota musi być dodatnia")
+        .required("Kwota jest wymagana"),
+      category: Yup.string().required("Kategoria jest wymagana"),
+      date: Yup.date().required("Data jest wymagana"),
+      description: Yup.string().required("Opis jest wymagany"),
+    }),
     onSubmit: (values) => {
       let item = {
         id: editedItem.id,
@@ -44,6 +54,7 @@ export function EditExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.title}
           />
+          <div>{formik.errors.title}</div>
         </div>
 
         <div>
@@ -55,6 +66,7 @@ export function EditExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.price}
           />
+          <div>{formik.errors.price}</div>
         </div>
 
         <div>
@@ -66,6 +78,7 @@ export function EditExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.category}
           />
+          <div>{formik.errors.category}</div>
         </div>
 
         <div>
@@ -77,6 +90,7 @@ export function EditExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.date}
           />
+          <div>{formik.errors.date}</div>
         </div>
 
         <div>
@@ -88,6 +102,7 @@ export function EditExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.description}
           />
+          <div>{formik.errors.description}</div>
         </div>
         <button type="submit" className="btn btn-success">
           Dodaj
