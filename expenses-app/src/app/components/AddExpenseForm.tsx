@@ -2,6 +2,11 @@ import React from "react";
 import { useFormik } from "formik";
 import { Item } from "./ExpenseItem";
 import { title } from "process";
+import * as Yup from "yup";
+
+// const validationSchema = Yup.object({
+//   title: Yup.string().required("Tytuł jest wymagany"),
+// });
 
 export function AddExpenseForm({
   onSubmitNewExpense,
@@ -16,6 +21,15 @@ export function AddExpenseForm({
       date: "",
       description: "",
     },
+    validationSchema: Yup.object({
+      title: Yup.string().min(3).required("Tytył jest wymagany"),
+      price: Yup.number()
+        .positive("Kwota musi być dodatnia")
+        .required("Kwota jest wymagana"),
+      category: Yup.string().required("Kategoria jest wymagana"),
+      date: Yup.date().required("Data jest wymagana"),
+      description: Yup.string().required("Opis jest wymagany"),
+    }),
     onSubmit: (values) => {
       let item = {
         title: values.title,
@@ -24,6 +38,7 @@ export function AddExpenseForm({
         date: values.date,
         description: values.description,
       } as Item;
+
       onSubmitNewExpense(item);
       formik.resetForm();
     },
@@ -41,6 +56,9 @@ export function AddExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.title}
           />
+          {formik.touched.title && formik.errors.title ? (
+            <div>{formik.errors.title}</div>
+          ) : null}
         </div>
 
         <div>
@@ -52,6 +70,9 @@ export function AddExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.price}
           />
+          {formik.touched.price && formik.errors.price ? (
+            <div>{formik.errors.price}</div>
+          ) : null}
         </div>
 
         <div>
@@ -63,6 +84,9 @@ export function AddExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.category}
           />
+          {formik.touched.category && formik.errors.category ? (
+            <div>{formik.errors.category}</div>
+          ) : null}
         </div>
 
         <div>
@@ -74,6 +98,9 @@ export function AddExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.date}
           />
+          {formik.touched.date && formik.errors.date ? (
+            <div>{formik.errors.date}</div>
+          ) : null}
         </div>
 
         <div>
@@ -85,8 +112,13 @@ export function AddExpenseForm({
             onChange={formik.handleChange}
             value={formik.values.description}
           />
+          {formik.touched.description && formik.errors.description ? (
+            <div>{formik.errors.description}</div>
+          ) : null}
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="btn btn-success">
+          Dodaj
+        </button>
       </form>
     </fieldset>
   );

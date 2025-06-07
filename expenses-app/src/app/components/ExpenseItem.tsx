@@ -32,7 +32,7 @@ const ExpenseItem: React.FC<ExpensesItem> = ({
       <td>{item.date}</td>
       <td>
         <button
-          className="btn btn-outline btn-error"
+          className="btn btn-outline btn-warning"
           onClick={(e) => {
             e.stopPropagation(); // Prevent row click from firing
             handleClickEdit(item);

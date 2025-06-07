@@ -89,7 +89,9 @@ export function EditExpenseForm({
             value={formik.values.description}
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="btn btn-success">
+          Dodaj
+        </button>
       </form>
     </fieldset>
   );

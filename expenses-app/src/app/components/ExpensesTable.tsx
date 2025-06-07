@@ -87,7 +87,7 @@ const ExpensesTable = () => {
       </div>
       <div>
         <button
-          className="btn btn-outline btn-info"
+          className="btn btn-outline btn-success"
           onClick={(e) => {
             setIsFormikModalOpen(true);
             const m = document.getElementById(
@@ -96,7 +96,7 @@ const ExpensesTable = () => {
             m?.showModal();
           }}
         >
-          Formik Modal
+          Nowy Wydatek
         </button>
         {isFormikModalOpen && (
           <AddExpenseFormModal
